@@ -50,7 +50,7 @@
       // 获取错误信息
       const msg = res.data.msg
       console.log('---code---',code)
-      if (res.data.code === 0 && res.data.msg === 'NOTLOGIN') {// 返回登录页面
+      if (res.data.code === 0 && res.data.msg === 'NOTLOGIN') {// 如果用户没登录，一律返回登录页面
         console.log('---/backend/page/login/login.html---',code)
         localStorage.removeItem('userInfo')
         window.top.location.href = '/backend/page/login/login.html'

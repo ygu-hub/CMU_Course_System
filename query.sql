@@ -2,41 +2,28 @@ create database if not exists CMU_Course_System;
 use CMU_Course_System;
 
 # drop tables with dependencies to other table
-drop table if exists student_to_person, students_level, students_major_or_minor,
+drop table if exists students_level, students_major_or_minor,
     class, section_in_class, tuition, waitlist, enrollment, course_name_match, works_for,
     students_attendance, students_gpa_per_quarter, Meeting_or_Review_in_section, prerequisite,
     financial_aid, degree_department_level, degree_category_concentration_requirements,
     courses_in_requirements, thesis_committee;
 # drop tables with no dependency to other table
-drop table if exists person, student, faculty, degree, department, course, level_of_study, probation;
-
-CREATE TABLE person (
-ssn bigint UNIQUE PRIMARY KEY,
-first_name varchar(30) NOT NULL,
-last_name varchar(30) NOT NULL,
-middle_name varchar(30)
-);
+drop table if exists student, faculty, degree, department, course, level_of_study, probation;
 
 CREATE TABLE student (
 andrew_id varchar(100) PRIMARY KEY,
 password varchar(100) NOT NULL,
 status int NOT NULL,    # 0: locked 1: unlocked
+ssn bigint UNIQUE,
+name varchar(30) NOT NULL,
+phone bigint,
 residency_status int NOT NULL,   # 0: Full time 1：Part time
 advisor_name varchar(100)
 );
 
-INSERT INTO student (andrew_id, password, status, residency_status, advisor_name)
-VALUES
-    ('andrew123', 'password123', 1, 0, 'John Doe'),
-    ('andrew456', 'password456', 1, 1, 'Jane Smith'),
-    ('andrew789', 'password789', 0, 0, 'Mike Johnson');
+INSERT INTO student (andrew_id, password, status, ssn, name, phone, residency_status, advisor_name)
+VALUES ('yingfan2', 'fcea920f7412b5da7be0cf42b8c93759', 1, 1234567890, 'Eileen', 8583492971,0, NULL);
 
-
-CREATE TABLE student_to_person (
-andrew_id varchar(100) REFERENCES student(andrew_id),
-ssn bigint REFERENCES person(ssn),
-CONSTRAINT student_to_person_pkey PRIMARY KEY (andrew_id, ssn)
-);
 
 CREATE TABLE students_attendance (
 andrew_id varchar(100) REFERENCES student(andrew_id),
